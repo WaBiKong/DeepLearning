@@ -6,7 +6,7 @@ x = torch.arange(4, dtype=torch.float32)
 y = torch.arange(4, dtype=torch.float32)
 print('x:', x)
 print('y:', y)
-print('向量-向量点积torch.dot(x, y):', torch.dot(x, y))  # torch.dot()计算向量乘向量的点积
+print('torch.dot(x, y):', torch.dot(x, y))  # torch.dot()计算向量乘向量的点积
 
 # 矩阵-向量相乘（向量积）
 A = torch.arange(20, dtype=torch.float32).reshape(5, 4)
