@@ -123,7 +123,6 @@ def updater(batch_szie):
 
 # 预测
 def predict_ch3(net, test_iter, n=6):
-    print("###########################################")
     for X, y in test_iter:
         break
     trues = d2l.get_fashion_mnist_labels(y)
