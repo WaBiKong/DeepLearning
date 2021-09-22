@@ -1,10 +1,11 @@
-from LinearNeuralNetwork.Accumulator import *
-from Animator import *
 import torch
 import torchvision
 from torch.utils import data
 from torchvision import transforms
 from d2l import torch as d2l
+
+from Accumulator import *
+from Animator import *
 
 def get_dataloader_workers():
     return 0
@@ -123,6 +124,7 @@ def updater(batch_szie):
 
 # 预测
 def predict_ch3(net, test_iter, n=6):
+    """预测标签。"""
     for X, y in test_iter:
         break
     trues = d2l.get_fashion_mnist_labels(y)
