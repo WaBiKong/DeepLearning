@@ -1,5 +1,17 @@
 from IPython import display
-from d2l import torch as d2l
+from matplotlib import pyplot as plt
+
+def set_axes(axes, xlabel, ylabel, xlim, ylim, xscale, yscale, legend):
+    """设置 matplotlib 的轴。"""
+    axes.set_xlabel(xlabel)
+    axes.set_ylabel(ylabel)
+    axes.set_xscale(xscale)
+    axes.set_yscale(yscale)
+    axes.set_xlim(xlim)
+    axes.set_ylim(ylim)
+    if legend:
+        axes.legend(legend)
+    axes.grid()
 
 # 动画中绘制数据的实用程序类
 class Animator:
@@ -12,15 +24,15 @@ class Animator:
         if legend is None:
             legend = []
         # display.set_matplotlib_formats('svg')
-        self.fig, self.axes = d2l.plt.subplots(nrows, ncols, figsize=figsize)
+        self.fig, self.axes = plt.subplots(nrows, ncols, figsize=figsize)
         if nrows * ncols == 1:
             self.axes = [self.axes, ]
         # 使用lambda函数捕获参数
-        self.config_axes = lambda: d2l.set_axes(
+        self.config_axes = lambda: set_axes(
             self.axes[0], xlabel, ylabel, xlim, ylim, xscale, yscale, legend)
         self.X, self.Y, self.fmts = None, None, fmts
-        d2l.plt.show(block=False)
-        d2l.plt.pause(0.1)
+        plt.show(block=False)
+        plt.pause(0.1)
 
     def add(self, x, y):
         # 向图表中添加多个数据点
@@ -42,7 +54,6 @@ class Animator:
         for x, y, fmt in zip(self.X, self.Y, self.fmts):
             self.axes[0].plot(x, y, fmt)
             self.config_axes()
-        # display.display(self.fig)
-        d2l.plt.show(block=False)
-        d2l.plt.pause(0.1)
+        plt.show(block=False)
+        plt.pause(0.1)
         display.clear_output(wait=True)

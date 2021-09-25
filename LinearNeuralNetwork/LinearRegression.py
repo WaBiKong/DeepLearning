@@ -1,6 +1,5 @@
 import torch
 import random
-from d2l import torch as d2l
 
 # y = Xw + b + c
 # 构造数据集
@@ -8,8 +7,8 @@ def synthetic_data(w, b, num_examples):
     X = torch.normal(0, 1, (num_examples, len(w)))
     # matmul可以进行张量乘法, 输入可以是高维.
     y = torch.matmul(X, w) + b
-    c = torch.normal(0, 0.01, y.shape)
-    y += c
+    noise = torch.normal(0, 0.01, y.shape)
+    y += noise
     return X, y.reshape((-1, 1))
 
 true_w = torch.tensor([2, -3.4])

@@ -1,8 +1,5 @@
 import torch
 from torch import nn
-import torchvision
-from torchvision import transforms
-from torch.utils import data
 
 import sys
 sys.path.append("../LinearNeuralNetwork")
@@ -36,5 +33,4 @@ loss = nn.CrossEntropyLoss()
 num_epochs, lr = 10, 0.1
 updater = torch.optim.SGD(params, lr=lr)
 Softmax.train_ch3(net, train_iter, test_iter, loss, num_epochs, updater)
-
 Softmax.predict_ch3(net, test_iter)
