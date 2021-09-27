@@ -4,7 +4,6 @@ from torch import nn
 import kun
 import torch
 
-
 max_degree = 20  # 多项式的最大阶数
 n_train, n_test = 100, 100  # 训练和测试数据集大小
 true_w = np.zeros(max_degree)  # 分配大量空间

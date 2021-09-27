@@ -182,8 +182,8 @@ def accuracy(y_hat, y):
     if len(y_hat.shape) > 1 and y_hat.shape[1] > 1:
         # 使用argmax获得每行中最大元素的索引来获得预测类别
         y_hat = y_hat.argmax(axis=1)
-    cmp = y_hat.type(y.dtype) == y  # cmp.shape == y.shape == size(n)
-    return float(cmp.type(y.dtype).sum())  # sum计算cmp中元素为1的总和，即正确数量
+    cmp = astype(y_hat, y.dtype) == y  # cmp.shape == y.shape == size(n)
+    return float(reduce_sum(astype(cmp, y.dtype)))  # sum计算cmp中元素为1的总和，即正确数量
 
 
 # 定义精度计算函数
@@ -226,8 +226,7 @@ def train_epoch_ch3(net, train_iter, loss, updater):
             updater.zero_grad()
             l.backward()
             updater.step()
-            metric.add(float(1) * len(y), accuracy(y_hat, y),
-                       y.size().numel())
+            metric.add(float(l) * len(y), accuracy(y_hat, y), y.numel())
         else:
             # 使用定制的优化器和损失函数
             l.sum().backward()
@@ -236,6 +235,19 @@ def train_epoch_ch3(net, train_iter, loss, updater):
     # 返回训练损失和训练准确率
     return metric[0] / metric[2], metric[1] / metric[2]
 
+# 定义训练函数
+def train_ch3(net, train_iter, test_iter, loss, num_epochs, updater):
+    """Train a model (defined in Chapter 3)."""
+    animator = Animator(xlabel='epoch', xlim=[1, num_epochs], ylim=[0.3, 0.9],
+                        legend=['train loss', 'train acc', 'test acc'])
+    for epoch in range(num_epochs):
+        train_metrics = train_epoch_ch3(net, train_iter, loss, updater)
+        test_acc = evaluate_accuracy(net, test_iter)
+        animator.add(epoch + 1, train_metrics + (test_acc,))
+    train_loss, train_acc = train_metrics
+    assert train_loss < 0.5, train_loss
+    assert train_acc <= 1 and train_acc > 0.7, train_acc
+    assert test_acc <= 1 and test_acc > 0.7, test_acc
 
 # pytorch数据迭代器
 def load_array(data_arrays, batch_size, is_train=True):
@@ -246,3 +258,4 @@ def load_array(data_arrays, batch_size, is_train=True):
 
 reduce_sum = lambda x, *args, **kwargs: x.sum(*args, **kwargs)
 size = lambda x, *args, **kwargs: x.numel(*args, **kwargs)
+astype = lambda x, *args, **kwargs: x.type(*args, **kwargs)

@@ -23,7 +23,7 @@ def l2_penalty(w):
 def train(lambd):
     w, b = init_params()
     net, loss = lambda X: kun.linreg(X, w, b), kun.squared_loss
-    num_epochs, lr = 100, 0.006
+    num_epochs, lr = 100, 0.003
     animator = kun.Animator(xlabel='epochs', ylabel='loss', yscale='log',
                             xlim=[5, num_epochs], legend=['train', 'test'])
     for epoch in range(num_epochs):
@@ -44,4 +44,4 @@ def train(lambd):
 # train(lambd=0)
 
 # 使用权重衰退
-train(lambd=5)
+train(lambd=3)
