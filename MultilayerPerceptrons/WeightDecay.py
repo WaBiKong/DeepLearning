@@ -40,8 +40,8 @@ def train(lambd):
     print('w的L2范数是：', torch.norm(w).item())
     kun.plt.show()
 
-# # 忽视正则化直接训练
-# train(lambd=0)
+# 忽视正则化直接训练
+train(lambd=0)
 
-# 使用权重衰退
-train(lambd=3)
+# # 使用权重衰退
+# train(lambd=3)
