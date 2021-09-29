@@ -81,6 +81,7 @@ all_features = pd.concat((train_data.iloc[:, 1:-1], test_data.iloc[:, 1:-1]))
 
 # 数据预处理
 # 为了将所有特征放在一个共同的尺度上，我们通过将特征重新缩放到零均值和单位方差来标准化数据
+# 取出all_features中为数值的特征的下标
 numeric_features = all_features.dtypes[all_features.dtypes != 'object'].index
 all_features[numeric_features] = all_features[numeric_features].apply(
     lambda x: (x - x.mean()) / (x.std()))
@@ -139,12 +140,12 @@ def train(net, train_features, train_labels, test_features, test_labels,
 # 获取第k折数据
 def get_k_fold_data(k, i, X, y):
     assert k > 1
-    fold_size = X.shape[0] // k
+    fold_size = X.shape[0] // k  # //表示整除
     X_train, y_train = None, None
     for j in range(k):
         idx = slice(j * fold_size, (j + 1) * fold_size)
         X_part, y_part = X[idx, :], y[idx]
-        if j == 1:
+        if j == i:
             X_valid, y_valid = X_part, y_part
         elif X_train is None:
             X_train, y_train = X_part, y_part
