@@ -38,4 +38,4 @@ K = torch.normal(0, 1, (2, 3, 1, 1))
 
 Y1 = corr2d_mulit_in_out(X, K)
 Y2 = corr2d_mulit_in_out_1x1(X, K)
-assert float(torch.abs(Y1 - Y2).sum())
+assert float(torch.abs(Y1 - Y2).sum()) < 1e-6
