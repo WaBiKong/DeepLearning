@@ -103,6 +103,7 @@ class Accumulator:
     def __getitem__(self, idx):
         return self.data[idx]
 
+
 # 创造数据 y = Xw + b + noise。
 def synthetic_data(w, b, num_examples):
     X = torch.normal(0, 1, (num_examples, len(w)))
@@ -111,6 +112,7 @@ def synthetic_data(w, b, num_examples):
     noise = torch.normal(0, 0.01, y.shape)
     y += noise
     return X, y.reshape((-1, 1))
+
 
 # 设置不使用多线程（若不为0，则使用多线程）
 def get_dataloader_workers():
@@ -136,6 +138,25 @@ def load_data_fashion_mnist(batch_size, resize=None):
                        num_workers=get_dataloader_workers()))
 
 
+# 下载MNIST数据集，然后将其加载到内存中
+def load_data_mnist(batch_size, resize=None):
+    """下载MNIST数据集，然后将其加载到内存中。"""
+    trans = [transforms.ToTensor()]
+    if resize:
+        trans.insert(0, transforms.Resize(resize))
+    trans = transforms.Compose(trans)
+    mnist_train = torchvision.datasets.MNIST(
+        root="../data", train=True, transform=trans, download=True
+    )
+    mnist_test = torchvision.datasets.MNIST(
+        root="../data", train=False, transform=trans, download=True
+    )
+    return (DataLoader(mnist_train, batch_size, shuffle=True,
+                       num_workers=get_dataloader_workers()),
+            DataLoader(mnist_test, batch_size, shuffle=False,
+                       num_workers=get_dataloader_workers()))
+
+
 # 定义优化算法(参数更新）:小批量随机梯度下降
 def sgd(params, lr, batch_size):
     """小批量随机梯度下降"""
@@ -148,15 +169,18 @@ def sgd(params, lr, batch_size):
             # 下次计算时就不会和上一次相关
             param.grad.zero_()
 
+
 # 定义线性神经网络模型
 def linreg(X, w, b):
     """线性回归模型"""
     return torch.matmul(X, w) + b
 
+
 # 定义平方损失函数
 def squared_loss(y_hat, y):
     """均方损失"""
     return (y_hat - y.reshape(y_hat.shape)) ** 2 / 2
+
 
 # 定义softmax操作
 # 对每一行（一个图片）而言，概率总和为 1
@@ -196,6 +220,7 @@ def evaluate_accuracy(net, data_iter):
         metric.add(accuracy(net(X), y), y.numel())
     return metric[0] / metric[1]
 
+
 # 评估给定数据集上模型的损失
 def evaluate_loss(net, data_iter, loss):
     """评估给定数据集上模型的损失。"""
@@ -206,6 +231,7 @@ def evaluate_loss(net, data_iter, loss):
         l = loss(out, y)
         metric.add(reduce_sum(l), size(l))
     return metric[0] / metric[1]
+
 
 # 定义一个函数来训练一个迭代周期
 def train_epoch_ch3(net, train_iter, loss, updater):
@@ -235,6 +261,7 @@ def train_epoch_ch3(net, train_iter, loss, updater):
     # 返回训练损失和训练准确率
     return metric[0] / metric[2], metric[1] / metric[2]
 
+
 # 定义训练函数
 def train_ch3(net, train_iter, test_iter, loss, num_epochs, updater):
     """Train a model (defined in Chapter 3)."""
@@ -248,6 +275,7 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, updater):
     assert train_loss < 0.5, train_loss
     assert train_acc <= 1 and train_acc > 0.7, train_acc
     assert test_acc <= 1 and test_acc > 0.7, test_acc
+
 
 # pytorch数据迭代器
 def load_array(data_arrays, batch_size, is_train=True):

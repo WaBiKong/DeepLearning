@@ -47,9 +47,10 @@ def show_images(imgs, num_rows, num_cols, titles=None, scale=1.5):
             ax.set_title(titles[i])
     return axes
 
-# X, y = next(iter(data.DataLoader(mnist_train, batch_size=18)))
-# show_images(X.reshape(18, 28, 28), 2, 9, titles=get_fashion_mnist_labels(y))
-# d2l.plt.show()
+
+X, y = next(iter(data.DataLoader(mnist_train, batch_size=18)))
+show_images(X.reshape(18, 28, 28), 2, 9, titles=get_fashion_mnist_labels(y))
+d2l.plt.show()
 
 batch_size = 256
 
