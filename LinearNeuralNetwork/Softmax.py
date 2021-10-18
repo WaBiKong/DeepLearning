@@ -5,6 +5,7 @@ from torchvision import transforms
 
 import kun
 
+
 # def get_dataloader_workers():
 #     return 0
 #
@@ -24,7 +25,6 @@ import kun
 #                             num_workers=get_dataloader_workers()),
 #             data.DataLoader(mnist_test, batch_size, shuffle=False,
 #                             num_workers=get_dataloader_workers()))
-
 
 
 # # 定义softmax操作
@@ -104,7 +104,7 @@ def cross_entropy(y_hat, y):
 def train_ch3(net, train_iter, test_iter, loss, num_epochs, updater):  # @save
     """训练模型"""
     animator = kun.Animator(xlabel='epoch', xlim=[1, num_epochs], ylim=[0.3, 0.9],
-                        legend=['train loss', 'train acc', 'test acc'])
+                            legend=['train loss', 'train acc', 'test acc'])
     for epoch in range(num_epochs):
         train_metrics = kun.train_epoch_ch3(net, train_iter, loss, updater)
         test_acc = kun.evaluate_accuracy(net, test_iter)
@@ -116,9 +116,11 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, updater):  # @save
     assert train_acc <= 1 and train_acc > 0.7, train_acc
     assert test_acc <= 1 and test_acc > 0.7, test_acc
 
+
 # 使用小批量随机梯度下降法更新参数
 def updater(batch_szie):
     return kun.sgd([W, b], lr, batch_size)
+
 
 # 预测
 def predict_ch3(net, test_iter, n=6):

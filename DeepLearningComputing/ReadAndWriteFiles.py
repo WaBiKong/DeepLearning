@@ -19,6 +19,7 @@ torch.save(mydict, 'mydict')
 mydict2 = torch.load('mydict')
 print(mydict2)
 
+
 # 加载和保存模型参数
 class MLP(nn.Module):
     def __init__(self):
