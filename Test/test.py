@@ -1,3 +1,6 @@
+import torchvision
+from torchvision import transforms
+
 import kun
 import torch
 from matplotlib import pyplot as plt
@@ -34,5 +37,12 @@ def show_images(imgs, num_rows, num_cols, titles=None, scale=1.5):
 
 
 X, y = next(iter(train_iter))
+print(X.shape)
 show_images(X.reshape(18, 28, 28), 2, 9, titles=get_mnist_labels(y))
 plt.show()
+
+trans = [transforms.ToTensor()]
+
+mnist_train = torchvision.datasets.MNIST(
+    root="../data", train=True, transform=trans, download=True
+)
