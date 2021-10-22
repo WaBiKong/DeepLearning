@@ -28,14 +28,18 @@ def batch_morm(X, gamma, beta, moving_mean, moving_var, eps, momentum):
 
 
 class BatchNorm(nn.Module):
+    # 'num_features': 全连接层的输出数量或卷积层的输出通道
+    # 'num_dims': 2表示全连接层，4表示卷积层
     def __init__(self, num_features, num_dims):
         super().__init__()
         if num_dims == 2:
             shape = (1, num_features)
         else:
             shape = (1, num_features, 1, 1)
+        # 初始化参与求梯度和迭代的参数变量
         self.gamma = nn.Parameter(torch.ones(shape))
         self.beta = nn.Parameter(torch.zeros(shape))
+        # 初始化非模型参数变量
         self.moving_mean = torch.zeros(shape)
         self.moving_val = torch.ones(shape)
 
