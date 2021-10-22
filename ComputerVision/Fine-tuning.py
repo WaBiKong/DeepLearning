@@ -18,6 +18,7 @@ not_hotdogs = [train_imgs[-i - 1][0] for i in range(8)]
 d2l.show_images(hotdogs + not_hotdogs, 2, 8, scale=1.4)
 plt.show()
 
+# ImageNet上算出来的，如果微调的模型中有batch_normalization，则不需要normalize
 # 使用三个RGB通道的均值和标准偏差，以标准化每个通道
 # 具体而言，通道的平均值将从该通道的每个值中减去，然后将结果除以该通道的标准差
 normalize = torchvision.transforms.Normalize([0.485, 0.456, 0.406],
