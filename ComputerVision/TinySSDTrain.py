@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from kun import Animator, Accumulator
+from kun import Animator, Accumulator, Timer
 
 from ComputerVision.MyData import load_data_bananas
 from ComputerVision.anchorBox import multibox_target
@@ -15,7 +15,7 @@ device, net = try_gpu(), TinySSD(num_classes=1)
 # 使用了权重衰退weight_decay=5e-4
 trainer = torch.optim.SGD(net.parameters(), lr=0.2, weight_decay=5e-4)
 # 训练模型
-num_epochs = 20
+num_epochs, timer = 20, Timer()
 animator = Animator(xlabel='epoch', xlim=[1, num_epochs],
                     legend=['class error', 'bbox mae'])
 net = net.to(device)
