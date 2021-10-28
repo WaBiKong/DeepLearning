@@ -2,8 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
-from d2l import torch as d2l
-
 from ComputerVision.BoundingBox import box_corner_to_center, bbox_to_rect, box_center_to_corner
 
 torch.set_printoptions(2)  # 精简打印精度

@@ -1,12 +1,9 @@
 import matplotlib.pyplot as plt
-import torchvision
-from torch.nn import functional as F
 
 from kun import Animator, Accumulator
-from d2l import torch as d2l
 
 from ComputerVision.MyData import load_data_bananas
-from ComputerVision.anchorBox import multibox_target, multibox_detection
+from ComputerVision.anchorBox import multibox_target
 from ComputerVision.TinySSD import *
 from DeepLearningComputing.GPU import try_gpu
 
@@ -18,7 +15,7 @@ device, net = try_gpu(), TinySSD(num_classes=1)
 # 使用了权重衰退weight_decay=5e-4
 trainer = torch.optim.SGD(net.parameters(), lr=0.2, weight_decay=5e-4)
 # 训练模型
-num_epochs, timer = 20, d2l.Timer()
+num_epochs = 20
 animator = Animator(xlabel='epoch', xlim=[1, num_epochs],
                     legend=['class error', 'bbox mae'])
 net = net.to(device)
