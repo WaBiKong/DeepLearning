@@ -36,6 +36,7 @@ for layer in net:
 batch_size = 28
 train_iter, test_iter = kun.load_data_fashion_mnist(batch_size, resize=224)
 
+
 def evaluate_accuracy_gpu(net, data_iter, device=None):
     """使用GPU计算模型在数据集上的精度"""
     if isinstance(net, torch.nn.Module):
@@ -54,11 +55,14 @@ def evaluate_accuracy_gpu(net, data_iter, device=None):
         metric.add(kun.accuracy(net(X), y), y.numel())
     return metric[0] / metric[1]
 
+
 def train(net, train_iter, test_iter, num_epochs, lr, device):
     """用GPU训练模型"""
+
     def init_weights(m):
         if type(m) == nn.Linear or type(m) == nn.Conv2d:
             nn.init.xavier_uniform_(m.weight)
+
     net.apply(init_weights)
     print('training on', device)
     net.to(device)
@@ -91,11 +95,13 @@ def train(net, train_iter, test_iter, num_epochs, lr, device):
     print(f'loss{train_l:.3f}, tarin acc{train_acc:.3f},test acc{test_acc:.3f}')
     print(f'{metric[2] * num_epochs / timer.sum():.1f} examples/sec on {str(device)}')
 
+
 def try_gpu(i=0):
     """如果存在，则返回gpu(i)，否则返回cpu()。"""
     if torch.cuda.device_count() >= i + 1:
         return torch.device(f'cuda:{i}')
     return torch.device('cpu')
+
 
 lr, num_epochs = 0.01, 10
 train(net, train_iter, test_iter, num_epochs, lr, try_gpu())
