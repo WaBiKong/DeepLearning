@@ -11,15 +11,18 @@ train_iter = kun.load_array(train_data, batch_size)
 test_data = kun.synthetic_data(true_w, true_b, n_test)
 test_iter = kun.load_array(test_data, batch_size, is_train=False)
 
+
 # 初始化模型参数
 def init_params():
     w = torch.normal(0, 1, size=(num_inputs, 1), requires_grad=True)
     b = torch.zeros(1, requires_grad=True)
     return [w, b]
 
+
 # 定义L2范数惩罚
 def l2_penalty(w):
     return torch.sum(w.pow(2)) / 2
+
 
 def train(lambd):
     w, b = init_params()
@@ -41,8 +44,10 @@ def train(lambd):
     print('w的L2范数是：', torch.norm(w).item())
     kun.plt.show()
 
+
 # 忽视正则化直接训练
 train(lambd=0)
+
 
 # # 使用权重衰退
 # train(lambd=3)

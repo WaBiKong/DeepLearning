@@ -1,10 +1,10 @@
 import torch
 from matplotlib import pyplot as plt
 
-plt.figure(figsize=(3.5, 2.5))  # 设置图层大小，未设置则使用默认大小
-img = plt.imread('../data/catdog.jpg')
-fig = plt.imshow(img)
-plt.show()
+# plt.figure(figsize=(3.5, 2.5))  # 设置图层大小，未设置则使用默认大小
+# img = plt.imread('../data/catdog.jpg')
+# fig = plt.imshow(img)
+# plt.show()
 
 
 def box_corner_to_center(boxes):
@@ -29,9 +29,9 @@ def box_center_to_corner(boxes):
     return boxes
 
 
-dog_bbox, cat_bbox = [60.0, 45.0, 378.0, 516.0], [400.0, 112.0, 655.0, 493.0]
-boxes = torch.tensor((dog_bbox, cat_bbox))
-print(box_center_to_corner(box_corner_to_center(boxes)) == boxes)
+# dog_bbox, cat_bbox = [60.0, 45.0, 378.0, 516.0], [400.0, 112.0, 655.0, 493.0]
+# boxes = torch.tensor((dog_bbox, cat_bbox))
+# print(box_center_to_corner(box_corner_to_center(boxes)) == boxes)
 
 
 def bbox_to_rect(bbox, color):
@@ -41,7 +41,7 @@ def bbox_to_rect(bbox, color):
                          edgecolor=color, linewidth=2)
 
 
-fig = plt.imshow(img)
-fig.axes.add_patch(bbox_to_rect(dog_bbox, 'b'))
-fig.axes.add_patch(bbox_to_rect(cat_bbox, 'r'))
-plt.show()
+# fig = plt.imshow(img)
+# fig.axes.add_patch(bbox_to_rect(dog_bbox, 'b'))
+# fig.axes.add_patch(bbox_to_rect(cat_bbox, 'r'))
+# plt.show()

@@ -51,14 +51,14 @@ def multibox_prior(data, sizes, ratios):
     return out_put.unsqueeze(0)  # 增加第0维
 
 
-img = plt.imread('../data/catdog.jpg')
-h, w = img.shape[:2]
-X = torch.rand(size=(1, 3, h, w))
-Y = multibox_prior(X, sizes=[0.75, 0.5, 0.25], ratios=[1, 2, 0.5])
-print(Y.shape)
+# img = plt.imread('../data/catdog.jpg')
+# h, w = img.shape[:2]
+# X = torch.rand(size=(1, 3, h, w))
+# Y = multibox_prior(X, sizes=[0.75, 0.5, 0.25], ratios=[1, 2, 0.5])
+# print(Y.shape)
 
-boxes = Y.reshape(h, w, 5, 4)
-print(boxes[250, 250, 0, :])
+# boxes = Y.reshape(h, w, 5, 4)
+# print(boxes[250, 250, 0, :])
 
 
 def show_bboxes(axes, bboxes, labels=None, colors=None):
@@ -85,13 +85,13 @@ def show_bboxes(axes, bboxes, labels=None, colors=None):
                       bbox=dict(facecolor=color, lw=0))
 
 
-plt.figure(figsize=(3.5, 2.5))
-bbox_scale = np.array((w, h, w, h))
-fig = plt.imshow(img)
-show_bboxes(fig.axes, boxes[250, 250, :, :] * bbox_scale,
-            ['s=0.75, r=1', 's=0.5, r=1', 's=0.25, r=1', 's=0.75, r=2',
-             's=0.75, r=0.5'])
-plt.show()
+# plt.figure(figsize=(3.5, 2.5))
+# bbox_scale = np.array((w, h, w, h))
+# fig = plt.imshow(img)
+# show_bboxes(fig.axes, boxes[250, 250, :, :] * bbox_scale,
+#             ['s=0.75, r=1', 's=0.5, r=1', 's=0.25, r=1', 's=0.75, r=2',
+#              's=0.75, r=0.5'])
+# plt.show()
 
 
 # Jaccard指数：交并比(IoU) 交并比是两个边界框相交面积与相并面积之比
@@ -246,3 +246,4 @@ def multibox_detection(cls_probs, offset_preds, anchors, nms_threshold=0.5,
                                predicted_bb), dim=1)
         out.append(pred_info)
     return torch.stack(out)
+
