@@ -8,7 +8,8 @@ from ComputerVision.anchorBox import multibox_detection, show_bboxes
 from DeepLearningComputing.GPU import try_gpu
 
 
-X = torchvision.io.read_image('../data/banana.jpg').unsqueeze(0).float()
+X = torchvision.io.read_image('../data/90.png').unsqueeze(0).float()
+print(X.shape)
 img = X.squeeze(0).permute(1, 2, 0).long()
 net_state_dict = torch.load('./TinySSD.pt')
 device, net = try_gpu(), TinySSD(num_classes=1)
