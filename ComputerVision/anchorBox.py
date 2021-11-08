@@ -1,5 +1,4 @@
-import matplotlib.pyplot as plt
-import numpy as np
+
 import torch
 
 from ComputerVision.BoundingBox import box_corner_to_center, bbox_to_rect, box_center_to_corner
